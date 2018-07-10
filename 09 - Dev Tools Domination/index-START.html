@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Console Tricks!</title>
+</head>
+<body>
+
+  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+
+  <script>
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+    function makeGreen() {
+      const p = document.querySelector('p');
+      p.style.color = '#BADA55';
+      p.style.fontSize = '50px';
+    }
+
+    // Regular
+    console.log("Hello");
+
+    // Interpolated - puts second string inside first string at '%s' point
+    console.log("Hello I am a %s string!", "great");
+      //with ES6 though, just use back ticks now
+      // console.log(`Hello I am a ${ variableName } string`);
+
+    // Styled
+      // %c before text denotes its styles, with second argument being the css styling
+    console.log("%cI am some styled text", "font-size: 20px;background:red");
+
+    // warning!
+      //warning styled in the console - with indication of where it occured
+    console.warn("oh noooo");
+
+    // Error :|
+      //error styled in the console - with indication of where it occured
+    console.error("oh noooo");
+
+    // Info
+      //info styled in the console - with indication of where it occured
+    console.info("I am the best!");
+
+    // Testing
+      // will only run if the 'test' (first arg) fails
+    console.assert(1 === 2, "That is wrong!");
+
+    // clearing
+    // console.clear();
+
+    // Viewing DOM Elements
+    const p = document.querySelector("p");
+      // will just log the element itself
+      // console.log(p);
+      //this will tell you all the properties and methods available on the p variable
+    console.dir(p);
+
+    // Grouping together
+    dogs.forEach(dog => {
+        //will group each 'dog' into own collapsed list of console.logs
+        //the variable passed is what the group will be grouped by
+      console.groupCollapsed(`${dog.name}`);
+      console.log(`This is ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old`);
+      console.log(`${dog.name} is ${dog.age * 7} in dog years`);
+        //will end the grouping, using the same variable initiated it with
+      console.groupEnd(`${dog.name}`);
+    })
+
+    // counting
+    //will show you count and total of how many times the argument has been show/initiated
+    console.count("Woo");
+    console.count("Woo");
+    console.count("Yay");
+    console.count("Woo");
+    console.count("Yay");
+    console.count("Woo");
+    console.count("Yay");
+    console.count("Yay");
+    console.count("Yay");
+
+    // timing
+    //see how long something takes to be completed
+    console.time("fetching data");
+    fetch("https://api.github.com/users/wesbos")
+      .then(data => data.json())
+      .then(data => {
+        // use the same string that is used to start timing to also end it
+        console.timeEnd("fetching data");
+        console.log(data);
+      });
+
+    //table
+    // take an array of object, and display in table (as long as the data holds the same info)
+    console.table(dogs);
+
+  </script>
+</body>
+</html>

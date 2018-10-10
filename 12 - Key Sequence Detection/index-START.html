@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
+</head>
+<body>
+<script>
+  const body = document.querySelector('body');
+  const sequenceOrder = 'javascript';
+  let newSequence = [];
+
+  function keyPressed(e) {
+    newSequence.push(e.key)
+    newSequence.splice(-sequenceOrder.length - 1, newSequence.length - sequenceOrder.length)
+    console.log(newSequence)
+    if(newSequence.join('') === sequenceOrder){
+      body.style.background = 'red'
+    } else {
+      body.style.background = 'green'
+    }
+  }
+  
+  window.addEventListener('keyup', keyPressed)
+</script>
+</body>
+</html>

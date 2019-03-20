@@ -32,12 +32,17 @@
         <input type="text" name="item" placeholder="Item Name" required />
         <input type="submit" value="+ Add Item" />
       </form>
+      <button id="btn">De/Select All</button>
     </div>
 
     <script>
       const addItems = document.querySelector('.add-items')
       const itemsList = document.querySelector('.plates')
+      const btn = document.querySelector('#btn')
       const items = JSON.parse(localStorage.getItem('items')) || []
+
+      let allSelected = false
+      let noneSelected = false
 
       // add item to array
       function addItem(e) {
@@ -80,8 +85,28 @@
         populateList(items, itemsList)
       }
 
+      function toggleAll(e) {
+        if (allSelected) {
+          items.forEach(item => {
+            item.done = false
+          })
+          allSelected = false
+          noneSelected = true
+        } else {
+          items.forEach(item => {
+            item.done = true
+          })
+          allSelected = true
+          noneSelected = false
+        }
+        // here we add to localStorage to retain data
+        localStorage.setItem('items', JSON.stringify(items))
+        populateList(items, itemsList)
+      }
+
       addItems.addEventListener('submit', addItem)
       itemsList.addEventListener('click', toggleDone)
+      btn.addEventListener('click', toggleAll)
 
       populateList(items, itemsList)
     </script>

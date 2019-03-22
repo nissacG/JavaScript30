@@ -45,31 +45,24 @@
 
     <script>
       const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog']
-
       const list = document.querySelector('#bands')
 
+      function removeArticle(bands) {
+        return bands.replace(/^(a |the |an )/i, '').trim()
+      }
+
+      // const sortedItems = items.sort((a, b) => {
+      //   if (removeArticle(a) > removeArticle(b)) return 1
+      //     else return -1
+      //   })
+
+      // REFACTORED
+      const sortedItems = bands.sort((a, b) => (removeArticle(a) > removeArticle(b) ? 1 : -1))
+
       function populateList(items, list) {
-        removeArticle(items[0])
-        const sortedItems = items.sort()
-        list.innerHTML = sortedItems
-          .map(item => {
-            return `
-            <li>${item}</li>
-          `
-          })
-          .join('')
+        list.innerHTML = sortedItems.map(item => `<li>${item}</li>`).join('')
       }
 
-      function removeArticle(string) {
-        let words = string.split(' ')
-        if (words.length <= 1) return string
-
-        if (['a', 'an', 'the'].includes(words[0])) {
-          console.log('contains')
-        }
-
-        console.log(words)
-      }
       populateList(bands, list)
     </script>
   </body>

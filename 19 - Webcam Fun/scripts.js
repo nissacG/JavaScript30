@@ -23,7 +23,7 @@ const setCanvasVideo = () => {
 
   return setInterval(() => {
     ctx.drawImage(video, 0, 0, videoWidth, videoHeight)
-    let pixels = ctx.getImageData(0, 0, videoWidth, viewHeight)
+    let pixels = ctx.getImageData(0, 0, videoWidth, videoHeight)
     
   }, 16)
 }

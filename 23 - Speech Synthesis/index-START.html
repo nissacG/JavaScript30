@@ -35,17 +35,40 @@
 
       msg.text = document.querySelector('[name="text"]').value
 
-      let optionsList = []
-
       function populateList() {
+        let voiceslist = []
         voices = this.getVoices()
-        console.log('here', voices)
-        optionsList = voices.map(voice => {
-          Object.assign({ label: `${voice.name} - ${voice.lang}`, value: `${voice.voiceURI}` })
-        })
+        voiceslist = voices
+          // .filter(voice => voice.lang.includes('en'))
+          .map(voice => `<option value="${voice.name}">${voice.name} (${voice.lang})</option>`)
+          .join('')
+
+        voicesDropdown.innerHTML = voiceslist
+      }
+
+      function setVoice() {
+        let newVoice = voices.find(voice => voice.name === this.value)
+        msg.voice = newVoice
+        toggle()
+      }
+
+      function toggle(startAgain = true) {
+        speechSynthesis.cancel()
+        if (startAgain) {
+          speechSynthesis.speak(msg)
+        }
+      }
+
+      function setOptions() {
+        msg[this.name] = this.value
+        toggle()
       }
 
       speechSynthesis.addEventListener('voiceschanged', populateList)
+      voicesDropdown.addEventListener('change', setVoice)
+      options.forEach(option => option.addEventListener('change', setOptions))
+      speakButton.addEventListener('click', toggle)
+      stopButton.addEventListener('click', () => toggle(false))
     </script>
   </body>
 </html>

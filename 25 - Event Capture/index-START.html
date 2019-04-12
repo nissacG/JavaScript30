@@ -41,6 +41,24 @@
     </style>
 
     <button></button>
-    <script></script>
+    <script>
+      const allDivs = document.querySelectorAll('div')
+
+      function logDiv(e) {
+        e.stopPropagation() // stops bubbling upward
+        console.log(this.classList.value)
+      }
+
+      // addEventListener take a third param which is an options object.
+      // in this case, we will use it to tore options about capture and bubbling
+      allDivs.forEach(div => div.addEventListener('click', logDiv, { capture: false }))
+      // capture: true will mean the events occur on the capture (parent downwards)
+      // default is false, which means capture goes from parent downwards, but the events occur from lowest child UPWARDS
+
+      // when combining capture: true and stopPropagation, when event on lowest child occurs, the event on highest parent is fired (due to capture order)
+
+      // allDivs.forEach(div => div.addEventListener('click', logDiv, { capture: false, once: true }))
+      // a NEW option now available is 'once', which unbinds the event from the element once the event has been triggered...once
+    </script>
   </body>
 </html>
